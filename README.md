@@ -13,12 +13,23 @@ Part 3: My personal dotfiles which are my custom configurations, more explained 
 Start off by following the Official setup guide and stop when you reach step 1.9 (Disk Partitioning)
 
 
-Then paste this command into your terminal
+Part 1:
+
+1.1 Paste this command into your terminal
 ```
-bash -s <(curl -fsSL https://raw.githubusercontent.com/marcuskelly09/archlinux/refs/heads/main/archinstall.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/marcuskelly09/archlinux/refs/heads/main/archinstall.sh)
 ```
 
-This script will do the following:
+1.2 Select your hostname and root password
+
+
+
+
+
+--- 
+
+
+Script part 1 does the following:
 
 - Create an EFI partition and a BTRFS linux filesystem
 
