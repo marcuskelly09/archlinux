@@ -1,1 +1,1 @@
-# Test for git
+echo "Script is working!"
