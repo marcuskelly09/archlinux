@@ -27,6 +27,6 @@ arch-chroot /mnt <<EOF
     echo "LANG=en_US.UTF-8" > /etc/locale.conf
     echo "laptoparch" > /etc/hostname
 EOF
-unmount -R /mnt
+umount -R /mnt
 
 echo "Installation complete, set a root password and install a bootloader"
