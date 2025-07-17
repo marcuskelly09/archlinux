@@ -7,15 +7,12 @@ parted -s /dev/nvme0n1 mkpart primary btrfs 3Gib 100%
 mkfs.fat /F32 /dev/nvme0n1p1
 mkfs.btrfs -f /dev/nvme0n1p2
 mount /dev/nvme0n1p2 /mnt
-mkdir /mnt/boot
-mount /dev/nvme0n1p1 /mnt/boot
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@var
 umount /mnt
 mount -o subvol=@ /dev/nvme0n1p2 /mnt
-mkdir /mnt/{boot,home,var}
-mkdit /mnt/boot/efi
+mkdir /mnt/{boot/efi,home,var}
 mount /dev/nvme0n1p1 /mnt/boot/efi
 mount -o subvol=@home /dev/nvme0n1p2 /mnt/home
 mount -o subvol=@var /dev/nvme0n1p2 /mnt/var
