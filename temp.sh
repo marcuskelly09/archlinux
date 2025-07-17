@@ -16,7 +16,7 @@ mkdir /mnt/{boot/efi,home,var}
 mount /dev/nvme0n1p1 /mnt/boot/efi
 mount -o subvol=@home /dev/nvme0n1p2 /mnt/home
 mount -o subvol=@var /dev/nvme0n1p2 /mnt/var
-pacstrap -K /mnt base linux-zen linux-firmware sof-firmware grub efibootmgr networkmanager nano nvim man-db man-pages reflector sudo
+pacstrap -K /mnt base linux-zen linux-firmware sof-firmware refind networkmanager nano nvim man-db man-pages reflector sudo
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt <<EOF
     ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
@@ -24,7 +24,6 @@ arch-chroot /mnt <<EOF
     locale-gen
     echo "LANG=en_US.UTF-8" > /etc/locale.conf
     echo "laptoparch" > /etc/hostname
-    grub-install --efi-directory=/boot
 EOF
 
 echo "run umount -R /mnt when done"
