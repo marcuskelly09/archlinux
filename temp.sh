@@ -24,6 +24,5 @@ arch-chroot /mnt
 ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
 hwclock --systohc
 locale-gen
-nvim /etc/locale.conf
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 echo "laptoparch" > /etc/hostname
