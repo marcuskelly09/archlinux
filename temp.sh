@@ -25,7 +25,7 @@ arch-chroot /mnt <<EOF
     echo "LANG=en_US.UTF-8" > /etc/locale.conf
     echo "laptoparch" > /etc/hostname
     refind-install
-    partuuid=%(blkid -s UUID -o value /dev/nvme0n1p2)
+    partuuid=$(blkid -s UUID -o value /dev/nvme0n1p2)
     echo "partuuid=$partuuid"
 EOF
 
