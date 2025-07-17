@@ -26,6 +26,7 @@ arch-chroot /mnt <<EOF
     echo "laptoparch" > /etc/hostname
     refind-install
     partuuid=%(blkid -s UUID -o value /dev/nvme0n1p2)
+    echo "partuuid=$partuuid"
 EOF
 
 echo "run umount -R /mnt when done"
