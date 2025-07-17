@@ -13,6 +13,11 @@ btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@var
 umount /mnt
+mount -o subvol=@ /dev/nvme0n1p2 /mnt
+mkdir /mnt/{boot,home,var}
+mount /dev/nvme0n1p1 /mnt/boot
+mount -o subvol=@home /dev/nvme0n1p2 /mnt/home
+mount -o subvol=@var /dev/nvme0n1p2 /mnt/var
 pacstrap -K /mmt base linux-zen linux-firmware sof-firmware amd-ucode networkmanager nano vim man-db man-pages reflector sudo
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
