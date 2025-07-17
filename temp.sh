@@ -21,3 +21,4 @@ hwclock --systohc
 locale-gen
 nvim /etc/locale.conf
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
+echo "laptoparch" > /etc/hostname
