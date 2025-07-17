@@ -29,6 +29,10 @@ arch-chroot /mnt <<EOF
     refind-install
     partuuid=$(blkid -s PARTUUID -o value /dev/nvme0n1p2)
     echo "partuuid=$partuuid"
+    
+    # Next Steps
+    # Set root pass
+    # Create user account/pasd
 EOF
 
 echo "run umount -R /mnt when done"
