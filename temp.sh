@@ -27,7 +27,7 @@ arch-chroot /mnt <<EOF
     echo "laptoparch" > /etc/hostname
     systemctl enable NetworkManager
     refind-install
-    partuuid=$(blkid -s UUID -o value /dev/nvme0n1p2)
+    partuuid=$(blkid -s PARTUUID -o value /dev/nvme0n1p2)
     echo "partuuid=$partuuid"
 EOF
 
