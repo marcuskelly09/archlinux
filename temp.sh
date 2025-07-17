@@ -24,6 +24,7 @@ arch-chroot /mnt <<EOF
     locale-gen
     echo "LANG=en_US.UTF-8" > /etc/locale.conf
     echo "laptoparch" > /etc/hostname
+    refind-install
 EOF
 
 echo "run umount -R /mnt when done"
