@@ -14,3 +14,10 @@ btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@var
 pacstap -K /mmt base linux-zen linux-firmware sof-firmware amd-ucode networkmanager nano vim man-db man-pages reflector sudo
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+hwclock --systohc
+locale-gen
+nvim /etc/locale.conf
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
