@@ -20,9 +20,13 @@ mount -o subvol=@home /dev/nvme0n1p2 /mnt/home
 mount -o subvol=@var /dev/nvme0n1p2 /mnt/var
 pacstrap -K /mnt base linux-zen linux-firmware sof-firmware networkmanager nano nvim man-db man-pages reflector sudo
 genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt
-ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
-hwclock --systohc
-locale-gen
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
-echo "laptoparch" > /etc/hostname
+arch-chroot /mnt <<EOF
+    ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+    hwclock --systohc
+    locale-gen
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf
+    echo "laptoparch" > /etc/hostname
+EOF
+unmount -R /mnt
+
+echo "Installation complete, install a bootloader"
