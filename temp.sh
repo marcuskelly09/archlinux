@@ -29,4 +29,4 @@ arch-chroot /mnt <<EOF
 EOF
 unmount -R /mnt
 
-echo "Installation complete, install a bootloader"
+echo "Installation complete, set a root password and install a bootloader"
