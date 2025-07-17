@@ -15,7 +15,8 @@ btrfs subvolume create /mnt/@var
 umount /mnt
 mount -o subvol=@ /dev/nvme0n1p2 /mnt
 mkdir /mnt/{boot,home,var}
-mount /dev/nvme0n1p1 /mnt/boot
+mkdit /mnt/boot/efi
+mount /dev/nvme0n1p1 /mnt/boot/efi
 mount -o subvol=@home /dev/nvme0n1p2 /mnt/home
 mount -o subvol=@var /dev/nvme0n1p2 /mnt/var
 pacstrap -K /mnt base linux-zen linux-firmware sof-firmware grub networkmanager nano nvim man-db man-pages reflector sudo
