@@ -9,10 +9,10 @@ function get_drives {
 
 function check_user_input_validity () {
 	func_output=""
-	array_length=${#all_drives[@]}
-
+	
+	# $1 is the input, $2 is the length of the input array
 	# Checks to see if input is within the indexes of the array
-	if [[ $1 > 0 && $1 -le $array_length ]]; then
+	if [[ $1 > 0 && $1 -le $2 ]]; then
 		func_output="valid"
 		return 0
 	else
@@ -38,15 +38,16 @@ function custom_drive_selection {
 
 		# User selection sreen
 		echo "Please select your drive:"
-		read input
+		read -n 1 input
 
 		# Checks if selected drive is valid
-		check_user_input_validity $input
+		check_user_input_validity $input ${#all_drives[@]}
 
 		if [[ $func_output == "valid" ]]; then
 			# Take user input -1 as the index for all_drives
 			drive=${all_drives[$(($input - 1))]}
 		else
+			echo ""
 			echo "ERROR: drive is invalid, aborting"
 			exit
 		fi
@@ -127,6 +128,8 @@ echo ""
 echo "Press ENTER to continue, to abort press ctrl+c"
 read input
 
+exit
+
 partition_drive
 
 if [[ $options == "default" ]]; then
@@ -146,4 +149,82 @@ else
 	fi
 fi
 
+genfstab -U /mnt/etc/fstab
 
+arch-chroot /mnt <<EOF
+
+# Functions
+
+function check_user_input_validity () {
+	func_output=""
+	
+	# $1 is the input, $2 is the length of the input array
+	# Checks to see if input is within the indexes of the array
+	if [[ $1 > 0 && $1 -le $2 ]]; then
+		func_output="valid"
+		return 0
+	else
+		func_output="invalid"
+		return 1
+	fi
+}
+
+function get_base_timezones {
+	alltimezones=()
+	alltimezonesindexed=()
+	count=0
+
+	readarray -t allzones <<<$(timedatectl list-timezones --no-pager)
+	
+	# Removes repeated base time zones
+	for zone in "${allzones[@]}"; do
+		base="${zone%/*}"
+		base_string_length=${#base}
+
+		ispresent="false"
+		for region in "${alltimezones[@]}"; do
+			if [[ $base == $region ]]; then
+				ispresent="true"	
+			fi
+		done
+		
+		if [[ $ispresent == "false" ]]; then
+			alltimezones+=("$base")
+		fi
+	done
+
+	# Adds indexes to base timezones
+	for zone in "${alltimezones[@]}"; do
+		((++count))
+		alltimezonesindexed+=("[${count}] $zone")
+	done
+	
+	# Lists all time zones in format [x] timezone in columns
+	IFS=$'\n'
+	column -c 120 <<< "${alltimezonesindexed[*]}"
+}
+
+loop="true"
+page=("home")
+while [[ $loop == "true" ]]; do
+	# Checks if user it at home page
+	if [[ "${page[-1]}" == "home" ]]; then
+		clear
+		echo "Please select you time zone, if the option you select has submenus, you can navigate them by selecting them"
+		echo ""
+		get_base_timezones
+		echo ""
+		echo "Please select a timezone"
+		read input
+
+		check_user_input_validity $input ${#alltimezones[@]}
+
+		if [[ $func_output == "valid" ]]; then
+			loop="false"
+		fi
+	fi
+done
+
+EOF
+
+umount -R /mnt
