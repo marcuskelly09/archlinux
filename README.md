@@ -17,7 +17,7 @@ Part 1:
 
 1.1 Paste this command into your terminal
 ```
-bash <(curl -fsSL https://raw.githubusercontent.com/marcuskelly09/archlinux/refs/heads/main/archinstall.sh)
+bash <(curl -fsSL bit.ly/46ddrW8)
 ```
 
 1.2 Select your hostname and root password
