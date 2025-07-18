@@ -127,9 +127,18 @@ echo ""
 echo "Press ENTER to continue, to abort press ctrl+c"
 read input
 
-
-exit
 ### Destructive
 
-partition_drive
+### partition_drive
 
+if [[ $options == "default" ]]; then
+	pacstrap -K /mnt base linux-zen linux-zen-headers linux-firmware sof-firmware refind gdisk networkmanager sudo base-devel fastfetch
+else
+	echo "Would you like to install the default packages listed below? (y/n)"
+	echo ""
+	echo "base linux-zen linux-zen-headers linux-firmware sof-firmware refind gdisk networkmanager sudo base-devel fastfetch"
+	read input
+
+	if [[ $input == "Y" || $input == "y" || $input == "" ]]; then
+		pacstrap -K /mnt base linux-zen linux-zen-headers linux-firmware sof-firmware refind gdisk networkmanager sudo base-devel fastfetch
+fi
