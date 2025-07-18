@@ -142,7 +142,7 @@ else
 	if [[ $input == "Y" || $input == "y" || $input == "" ]]; then
 		pacstrap -K /mnt base linux-zen linux-zen-headers linux-firmware sof-firmware refind gdisk networkmanager sudo base-devel fastfetch
 	else
-		echo "Please list the packages you would like to install seperated by space"
+		echo "Please list the packages you would like to install seperated by spaces"
 		read input
 		pacstrap -K /mnt $input
 	fi
