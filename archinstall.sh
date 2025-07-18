@@ -7,7 +7,7 @@ function get_drives {
 	all_drives+=( $(lsblk -dno path) )
 }
 
-function check_drive_validity () {
+function check_user_input_validity () {
 	func_output=""
 	array_length=${#all_drives[@]}
 
@@ -41,7 +41,7 @@ function custom_drive_selection {
 		read input
 
 		# Checks if selected drive is valid
-		check_drive_validity $input
+		check_user_input_validity $input
 
 		if [[ $func_output == "valid" ]]; then
 			# Take user input -1 as the index for all_drives
@@ -122,14 +122,12 @@ fi
 
 
 clear
-echo "IMPORTANT: This script will WIPE your drive: ${drive} to install arch"
+echo "IMPORTANT: This script will $(tput bold)WIPE$(tput sgr0) your drive: ${drive} to install arch"
 echo ""
 echo "Press ENTER to continue, to abort press ctrl+c"
 read input
 
-### Destructive
-
-### partition_drive
+partition_drive
 
 if [[ $options == "default" ]]; then
 	pacstrap -K /mnt base linux-zen linux-zen-headers linux-firmware sof-firmware refind gdisk networkmanager sudo base-devel fastfetch
@@ -147,3 +145,5 @@ else
 		pacstrap -K /mnt $input
 	fi
 fi
+
+
